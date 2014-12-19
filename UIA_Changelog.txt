@@ -1,0 +1,140 @@
+edit 15 sep 2014
+* lots of updates and cleanup of code
+* The actions provided so far
+* "leftclick", "left", "click", "leftdoubleclick", "leftdouble", "doubleclick", _
+* "rightclick", "right", "rightdoubleclick", "rightdouble", _
+* "middleclick", "middle", "middledoubleclick", "middledouble", "mousemove", "movemouse"
+* "setvalue","settextvalue"
+* "setvalue using keys"
+* "getvalue"
+* "sendkeys", "enterstring", "type", "typetext"
+* "invoke"
+* "focus", "setfocus", "activate"
+* "close"
+* "move","setposition"
+* "resize"
+* "minimize", "maximize", "normal", "close", "exist", "exists"
+* "searchcontext", "context"
+* "highlight"
+* "getobject","object"
+* "attach"
+* "capture","screenshot"
+* "dump", "dumpthemall"
+
+;~ Version 0.41 + Declared all variables
+;~ Version 0.42 july 23rd 2014
+;~ - Changed: Added all properties of ui automation to use in expressions
+;~            syntax:= "name:=((Zoeken.*)|(Find.*)); ControlType:=Button; acceleratorkey:=Ctrl\+F"
+;~ - Changed: _UIA_getAllPropertyValues rewritten based on properties array
+;~ Version 0.43 August 4th 2014
+;~ - Changed: Cleaning, regrouping in regions. Make stuff splittable in UIA core and Testframework stuff
+;~ - Added: window activate, close, move, resize, minimize, maximize, normal, exists window action in UIA_Action
+;~    _UIA_Action("Name:=.*Mozilla.*;class:=MozillaWindowClass","setfocus") ;Classname there as duplicate on tooltip in statusbar
+;~    _UIA_Action("Name:=.*Mozilla.*;instance:=2","setfocus") ;Instance there as duplicate on tooltip in statusbar
+;~    _UIA_Action("classname:=CalcFrame","activate")
+;~    _UIA_Action("Name:=Rekenmachine;classname:=CalcFrame","close")
+;~    _UIA_Action("Name:=Rekenmachine;classname:=CalcFrame","maximize")
+;~ - Added: Table compare AutoIT functions to UIA and LDTP equivalents
+;~ - Fixed: _UIA_setVar issue with datadictionary assignment = with object not working, workaround used, opened thread on forum to see if its a BUG
+;~ Version 0.44 August 15th 2014
+;~ - Added: Advanced window descriptions to be compatible with AutoIT
+;~          supported: TITLE - Window title
+;~          supported: CLASS - The internal window classname
+;~          supported: REGEXPTITLE - Window title using a regular expression (if the regular expression is wrong @error will be set to 2)
+;~          supported: REGEXPCLASS - Window classname using a regular expression (if the regular expression is wrong @error will be set to 2)
+;~          supported: LAST - Last window used in a previous AutoIt command
+;~          supported: ACTIVE - Currently active window
+;~ TODO NOT supported: X \ Y \ W \ H - The position and size of a window
+;~          supported: INSTANCE - The 1-based instance when all given properties match
+;~ - Changed: Generic arrays at global level instead of within function like for getPattern
+;~ Version 0.50 August 30st 2014
+;~ - Added: getvalue, screencapture action in UIA_Action
+;~ - Changed: enhanced logic on finding first on child, then on subtree and worst case in parent/subtree
+;~ - Changed: Cleaned up code and splitted _UIA_Action and _UIA_GetObject to have search and action splitted functionality
+;~ - Changed: Examples rerun on compatibility / regression
+;~ - Changed: Cleaned up and align some stuff with IE3.au3 regarding certain functions
+;~ Version 0.52 september 12th 2014
+;~ - Added: some properties
+;~ - Changed: _UIA_DEBUG to _UIA_LOG as its more informational logging and pass/fail/warning actions on test framework level
+;~ - Changed: more usage of seterror
+
+edit 11 aug 2013
+* UIAWrappers.AU3 for helper functions (CUIAutomation2.AU3 will only have the interface defined)
+* Cleaner example + rubberbanding
+* Mouse down will show immediately the details (no ctrl+m needed)
+* prefixing functions with _UIA_
+
+edit 18 aug 2013
+* Updated UIAWrappers.AU3
+** _UIA_getTaskbar to get the taskbar
+** _UIA_getPattern to easily get a pattern to execute certain actions supported by the element
+** _UIA_getFirstObjectOfElement to support syntax like name:=Start   (default is name property)
+or
+** _UIA_getFirstObjectOfElement($odesktop,"classname:=ClockFlyoutWindow",$TreeScope_Children)
+  single property only for now and only 4 properties supported
+
+edit 18 aug 2013
+* Updated UIAWrappers.AU3
+* valuepattern added to _UIA_getPattern
+
+edit 29th aug 2013
+* Updated UIAWrappers.AU3
+
+edit 30st aug 2013
+* Updated UIAWrappers.AU3
+* added _UIA_getObjectByFindAll($oDocument,"name:=Search... indexrelative:=2", $treescope_subtree)
+
+edit september 19th 2013
+* Updated UIAWrappers.AU3 with finding by regular expression
+** _UIA_getObjectByFindAll($oDocument,"name:="name:=Search.*", $treescope_subtree)
+
+edit oktober 25th 2013
+* Updated UIAWrappers.AU3
+* Expand/collapse added
+* _UIA_DumpthemAll to make debugging easier
+* Enhanced with dictionary to store variables / abstract the definition/identification patterns from the source
+* debug true/false
+* highlight true/false
+* System under test (SUT1) to later move this to some kind of a repository/name mapping logic
+* spy code little update (ctrl+w + important values on top)
+
+edit november 1st 2013
+* Updated UIAWrappers.AU3
+* See new example number 10 for how clean the code is going to be 
+** http://www.autoitscript.com/forum/topic/153520-iuiautomation-ms-framework-automate-chrome-ff-ie/?p=1126899
+* Runtime Type Information (some objects are under RTI. in the repository logic)
+* Integrated mainly everything under _UIA_Action function to abstract the complexity of getting objects by propery names
+* supported: name, title, automationid, classname, class, iaccessiblevalue, iaccessiblechildid, controltype
+* indexrelative and index (comparable to instance: of AutoIT)
+* Cleaned up 1st post and added UIA_changelog.txt as a file
+* mainwindow logical description will have once found the object be put in RTI for easy reference as an easy starting point to search object elements 
+
+edit november 5th
+* Walked thru all examples from 1 thru 10 to fix issues introduced due to new versions of UIWrapper
+* added all patterns
+* enhanced _UIA_StartSUT (system under test) with putting mainwindow directly in RTI.SUTn.HWND
+* added procesid property
+
+edit november 17th 2013
+* Updated UIAWrappers.AU3
+* Updated CUIAutomation2.AU3 (fixed none variables to HWND, STRUCT and PTR where needed)
+* Updated UIA_Changelog.txt
+* Added: match on multiple properties like: 
+* name:=((Zoeken.*)|(Find.*)); ControlType:=Button; acceleratorkey:=Ctrl\+F
+* supported properties: name ,title, automationid, classname, class, iaccessiblevalue, iaccessiblechildId, controltype, processid, acceleratorkey
+* new example number 11
+* made configuration file possible UIA.CFG (attached to example 11)
+* added loading / setup thru arrays
+* added main routing to run sequentially multiple actions 
+* changed spy a little bit to show parent information
+
+edit feb 21st 2014
+* Added new cuiautomation2.au3 (smallest is the latest one) with fixes as given in thread by LarsJ
+edit may 13th 2014
+* Fixed all examples
+* Extended references in first post to all examples in the thread
+* Added everything in 2 zip files and attached to this first post
+* Added debuglogging to a file log.txt (no output in scitewindow)
+* More in line with UDF conventions (script breaking changes on some global variables)
+* Added IAccessible, IAccessible2, ISimpleDom from LarsJ postings
+* edit jun 15th 2014 small update on simplespy and removed unneeded attachments
