@@ -1,4 +1,1 @@
-UIGO
-====
-
-Windows UI Automation Helper
+#UIGO
