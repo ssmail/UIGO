@@ -17,6 +17,8 @@ Chris Hong  Chrishong@outlook.com
 #include <GuiListView.au3>
 ; My libs files
 #include "UIGOConstants.au3"
+#include "ScriptGenerator.au3"
+#include "ExecuteEngine.au3"
 ;------------------------------------------------------------------------------
 
 
@@ -78,4 +80,7 @@ Func __InsertStep()
 	_GUICtrlListView_AddItem($lvt_StepList, $strControlType, 0)
 	_GUICtrlListView_AddSubItem($lvt_StepList, $intListViewIndex, $strControlAction  & _
 									" " & $strControlType & " " & $strParameters , 1, 1)
+
+	_UIGO_Add_Step($strControlType, $strControlAction, $strParameters)
 EndFunc
+

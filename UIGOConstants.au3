@@ -12,3 +12,7 @@ Global Const $UIGO_Control_Support_Actions = "Check|Select|GetText"
 
 Global Const $UIGO_Control_Default_Type = "Window"
 Global Const $UIGO_Control_Default_Action = "Activite"
+
+
+
+Global Const $UIGO_Window_Action
