@@ -16,11 +16,12 @@ Chris Hong  Chrishong@outlook.com
 #include <WindowsConstants.au3>
 #include <GuiListView.au3>
 ; My libs files
-#include "UIGOConstants.au3"
-#include "ScriptGenerator.au3"
-#include "ExecuteEngine.au3"
+;#include "UIGOConstants.au3"
+;#include "ScriptGenerator.au3"
+;#include "ExecuteEngine.au3"
+#include "Inc.au3"
 ;------------------------------------------------------------------------------
-
+#include-once
 
 #Region ### START Koda GUI section ### Form=d:\git\uigo\git\uigo\userdescriptiongenerator.kxf
 $Form1_1 = GUICreate("UI Description Generator", 985, 498, 192, 124)
@@ -39,8 +40,6 @@ GUICtrlSetData(-1, $UIGO_Control_Support_Actions)
 $btn_Insert = GUICtrlCreateButton("Insert Step", 488, 224, 75, 25)
 $lbl_Param = GUICtrlCreateLabel("Parameters", 436, 127, 66, 19)
 $ipt_Params = GUICtrlCreateInput("", 432, 160, 121, 23)
-
-
 
 $lvt_StepList = GUICtrlCreateListView("", 624, 32, 337, 441)
 
@@ -75,12 +74,23 @@ Func __InsertStep()
 	Local $strControlType = GUICtrlRead($Cmbx_ControlType)
 	Local $strControlAction = GUICtrlRead($Cmbx_ControlAction)
 	Local $strParameters = GUICtrlRead($ipt_Params)
+	Local $strWorkWindow = GUICtrlRead($ipt_WorkWindow)
+
 	$intListViewIndex = _GUICtrlListView_GetItemCount($lvt_StepList)
 
 	_GUICtrlListView_AddItem($lvt_StepList, $strControlType, 0)
 	_GUICtrlListView_AddSubItem($lvt_StepList, $intListViewIndex, $strControlAction  & _
 									" " & $strControlType & " " & $strParameters , 1, 1)
 
-	_UIGO_Add_Step($strControlType, $strControlAction, $strParameters)
+	_UIGO_Add_Step($strWorkWindow, $strControlType, $strControlAction, $strParameters)
 EndFunc
 
+
+Func __GetParams()
+
+	Local $strControlType = GUICtrlRead($Cmbx_ControlType)
+	Local $strControlAction = GUICtrlRead($Cmbx_ControlAction)
+	Local $strParameters = GUICtrlRead($ipt_Params)
+	Local $strWindowName = GUICtrlRead($ipt_WorkWindow)
+
+EndFunc

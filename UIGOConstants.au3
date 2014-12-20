@@ -8,11 +8,14 @@ Chris Hong  Chrishong@outlook.com
 #ce ----------------------------------------------------------------------------
 
 Global Const $UIGO_Support_Control_Types = "Button|Edit|Checkbox|Radio|Listbox|ComboBox"
-Global Const $UIGO_Control_Support_Actions = "Check|Select|GetText"
+Global Const $UIGO_Control_Support_Actions = "Check|Select|GetText|Move|Click"
 
 Global Const $UIGO_Control_Default_Type = "Window"
 Global Const $UIGO_Control_Default_Action = "Activite"
 
 
 
-Global Const $UIGO_Window_Action
+Global Const $UIGO_Window_Action = ""
+
+Global Const $ACTION_WINDOW_MOVE = "MOVE"
+Global Const $ACTION_WINDOW_ACTIVITE = "ACTIVITE"
