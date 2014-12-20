@@ -42,6 +42,7 @@ Func __UIGO_Window_Action($strAction)
 	If IsArray($aryAction) Then
 		$strWindowTitle = $aryAction[1]
 		$strWindowAction = $aryAction[3]
+		$strParam = $aryAction[4]
 	Else
 		__Err(1, "test", "Error action string")
 	EndIf
@@ -49,7 +50,7 @@ Func __UIGO_Window_Action($strAction)
 	Switch $strWindowAction
 
 		Case $ACTION_WINDOW_MOVE
-			__UIGO_Window_Action_Move($strWindowTitle, $strWindowTitle)
+			__UIGO_Window_Action_Move($strWindowTitle, $strParam)
 			ConsoleWrite("Move : " & $strWindowTitle)
 		Case $ACTION_WINDOW_ACTIVITE
 			ConsoleWrite("active : " & $strWindowTitle)
@@ -67,12 +68,71 @@ EndFunc
 
 Func __UIGO_Window_Action_Move($strWindow, $strTargetPos)
 
-	Local $aryPos = StringSplit($strTargetPos, "|")
+	Local $aryPos = StringSplit($strTargetPos, $UIGO_PARAM_SPERATOR)
 	If IsArray($aryPos) Then
 		WinActivate($strWindow)
-		WinWaitActive($strWindow)
-		WinMove($strWindow, "", $aryPos[0], $aryPos[1])
+		WinWaitActive($strWindow, "", 2)
+		WinMove($strWindow, "", $aryPos[1], $aryPos[2])
 	Else
-		__Err(1, "", "Window move post param error")
+		__Err(1, "", "Error parameters")
+	EndIf
+EndFunc
+
+
+Func __UIGO_Mouse_Action($strAction)
+	Local $aryAction = StringSplit($strAction, "|")
+	Local $strWindowTitle = ""
+	Local $strWindowAction = ""
+	Local $strParam = ""
+
+	If IsArray($aryAction) Then
+		$strWindowTitle = $aryAction[1]
+		$strWindowAction = $aryAction[3]
+		$strParam = $aryAction[4]
+	Else
+		__Err(1, "", "Param format error")
+	EndIf
+
+	Switch $strWindowAction
+		Case $ACTION_MOUSE_RCLICK
+			__UIGO_MouseRightClick($strParam)
+		Case $ACTION_MOUSE_LCLICK
+			__UIGO_Mouse_Click($strParam)
+		Case $ACTION_MOUSE_MOVE
+			__UIGO_Mouse_Move($strParam)
+		Case Else
+		 __Err(1, "", "Mouse operation param error")
+	EndSwitch
+
+EndFunc
+
+Func __UIGO_Mouse_Click($strTargetPos)
+
+	Local $aryPos = StringSplit($strTargetPos, $UIGO_PARAM_SPERATOR)
+	If IsArray($aryPos) Then
+		MouseClick("Left", $aryPos[1], $aryPos[2])
+	Else
+		__Err(1, "", "Param error")
+	EndIf
+EndFunc
+
+Func __UIGO_Mouse_Move($strTargetPos)
+
+	Local $aryPos = StringSplit($strTargetPos, $UIGO_PARAM_SPERATOR)
+
+	If IsArray($aryPos) Then
+		MouseMove($aryPos[1], $aryPos[2])
+	Else
+		__Err(0, "", "Param error")
+	EndIf
+EndFunc
+
+Func __UIGO_MouseRightClick($strTargetPos)
+
+	Local $aryPos = StringSplit($strTargetPos, $UIGO_PARAM_SPERATOR)
+	If IsArray($aryPos) Then
+		MouseClick("Right", $aryPos[1], $aryPos[2])
+	Else
+		__Err(1, "", "Param error")
 	EndIf
 EndFunc

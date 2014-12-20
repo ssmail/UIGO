@@ -7,15 +7,22 @@ Chris Hong  Chrishong@outlook.com
 2014/12/19
 #ce ----------------------------------------------------------------------------
 
-Global Const $UIGO_Support_Control_Types = "Button|Edit|Checkbox|Radio|Listbox|ComboBox"
-Global Const $UIGO_Control_Support_Actions = "Check|Select|GetText|Move|Click"
+Global Const $UIGO_Support_Control_Types = "Mouse|Button|Edit|Checkbox|Radio|Listbox|ComboBox"
+Global Const $UIGO_Control_Support_Actions = "Check|Select|GetText|Move|RClick|LCLICK"
 
 Global Const $UIGO_Control_Default_Type = "Window"
 Global Const $UIGO_Control_Default_Action = "Activite"
 
-
+Global Const $UIGO_PARAM_SPERATOR = ","
 
 Global Const $UIGO_Window_Action = ""
 
+; Windows Action
 Global Const $ACTION_WINDOW_MOVE = "MOVE"
 Global Const $ACTION_WINDOW_ACTIVITE = "ACTIVITE"
+
+; Mouse Action
+Global Const $ACTION_MOUSE_RCLICK = "RCLICK"
+Global Const $ACTION_MOUSE_LCLICK = "LCLICK"
+Global Const $ACTION_MOUSE_MOVE = "MOVE"
+
