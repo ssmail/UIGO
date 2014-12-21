@@ -18,7 +18,7 @@ EndFunc
 
 Func ActionRecord($strAction)
 
-	__UIGO_Mouse_Action($strAction)
+	__UIGO_Window_Action($strAction)
 
 	;If Not FileExists($FP_UIGO_DESC) Then __Err(1, "Test", "UIGO_DESC not found")
 	Local $FH_UIGO_DESC = FileOpen($FP_UIGO_DESC, 1)
