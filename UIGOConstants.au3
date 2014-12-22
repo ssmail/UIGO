@@ -15,17 +15,3 @@ Global Const $UIGO_Control_Default_Action = "Activite"
 
 Global Const $UIGO_PARAM_SPERATOR = ","
 
-Global Const $UIGO_Window_Action = ""
-
-; Windows Action
-Global Const $ACTION_WINDOW_MOVE = "MOVE"
-Global Const $ACTION_WINDOW_ACTIVITE = "ACTIVITE"
-
-; Mouse Action
-Global Const $ACTION_MOUSE_RCLICK = "RCLICK"
-Global Const $ACTION_MOUSE_LCLICK = "LCLICK"
-Global Const $ACTION_MOUSE_MOVE = "MOVE"
-
-; Keyboard Action
-Global Const $ACTION_KB_DIRECTION = "DIRECTION"
-Global Const $ACTION_KB_ENTER = "ENTER"

@@ -17,6 +17,7 @@ Chris Hong  Chrishong@outlook.com
 
 ; Load all the function map relationship
 Global $UIGO_ActionMap = Dict()
+
 $UIGO_ActionMap.add("DIRECTION", "__UIGO_KB_DIRECTION")
 $UIGO_ActionMap.add("MOVE", "__UIGO_Window_Action_Move")
 $UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
@@ -27,11 +28,24 @@ $UIGO_ActionMap.add("MOVE", "__UIGO_Window_Action_Move")
 $UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
 
 
-$Keys=$UIGO_ActionMap.keys()
-$items=$UIGO_ActionMap.items()
-_ArrayDisplay($Keys)
-_ArrayDisplay($items)
+;ShowActionMap()
 
+Func ShowActionMap()
+
+	Local $aryDict[2][2]
+	Local $Keys = $UIGO_ActionMap.keys()
+	Local $items = $UIGO_ActionMap.items()
+	Local $intCount = $UIGO_ActionMap.count()
+	ReDim $aryDict[$intCount][2]
+
+	For $intItem = 0 To $intCount - 1
+
+		$aryDict[$intItem][0] = $Keys[$intItem]
+		$aryDict[$intItem][1] =$UIGO_ActionMap.item($Keys[$intItem])
+	Next
+
+	_ArrayDisplay($aryDict)
+EndFunc
 
 Func __UIGO_Find($UIDescription)
 
