@@ -1,11 +1,59 @@
-#cs ----------------------------------------------------------------------------
+#include "UIAWrappers.au3"
 
- AutoIt Version: 3.3.10.2
- Author:         myName
 
- Script Function:
-	Template AutoIt script.
+__Search_Object("Name:=UIGO", "AutomationId:=SearchEditBox")
 
-#ce ----------------------------------------------------------------------------
+Func __UIGO_Find($UIDescription)
 
-; Script Start - Add your code below here
+	Local $oElement = _UIA_getFirstObjectOfElement($UIA_oDesktop, $UIDescription, $treescope_children)
+
+	If IsObj($oElement) Then
+		Return $oElement
+	Else
+		MsgBox(0, "", "Object not found", 1)
+		Return 0
+	EndIf
+
+EndFunc
+
+
+Func __Search_Object($ObjRootDesc, $ObjDesc)
+
+	Local $oRootWindow = __UIGO_Find($ObjRootDesc)
+
+	If IsObj($oRootWindow) Then
+
+		Local $oTargetControl = __UIA_FindObj($oRootWindow, $ObjDesc)
+
+		If IsObj($oTargetControl) Then
+
+			Return $oTargetControl
+		Else
+			Return False
+		EndIf
+
+	EndIf
+
+
+EndFunc
+
+Func __UIA_FindObj($UIA_ROOT, $UIA_DESC, $TRY_TIME = 3, $WaitTime = 3000)
+
+
+	If $TRY_TIME  Then
+
+		$oControl = _UIA_getFirstObjectOfElement($UIA_ROOT, $UIA_DESC, $treescope_subtree)
+
+		If IsObj($oControl) Then
+
+			Return $oControl
+		Else
+			Sleep($WaitTime)
+			$TRY_TIME = $TRY_TIME - 1
+			__UIA_FindObj($UIA_ROOT, $UIA_DESC, $TRY_TIME, $WaitTime)
+		EndIf
+	Else
+		Return False
+	EndIf
+
+EndFunc

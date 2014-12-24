@@ -23,6 +23,8 @@ Chris Hong  Chrishong@outlook.com
 ;------------------------------------------------------------------------------
 #include-once
 
+__UIGO_Initialization()
+
 #Region ### START Koda GUI section ### Form=d:\git\uigo\git\uigo\userdescriptiongenerator.kxf
 $Form1_1 = GUICreate("UI Description Generator", 985, 498, 192, 124)
 GUISetFont(10, 400, 0, "Cambria")
@@ -37,9 +39,9 @@ $lbl_Action = GUICtrlCreateLabel("Action", 243, 129, 40, 19)
 $Cmbx_ControlAction = GUICtrlCreateCombo($UIGO_Control_Default_Action, 236, 160, 153, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
 GUICtrlSetData(-1, $UIGO_Control_Support_Actions)
 
-$btn_Insert = GUICtrlCreateButton("Insert Step", 488, 224, 75, 25)
-$lbl_Param = GUICtrlCreateLabel("Parameters", 436, 127, 66, 19)
-$ipt_Params = GUICtrlCreateInput("", 432, 160, 121, 23)
+$btn_Insert = GUICtrlCreateButton("Insert Step", 488, 230, 75, 25)
+$lbl_Param = GUICtrlCreateLabel("Parameters", 56, 200, 66, 19)
+$ipt_Params = GUICtrlCreateInput("", 56, 230, 300, 23)
 
 $lvt_StepList = GUICtrlCreateListView("", 624, 32, 337, 441)
 
@@ -50,6 +52,7 @@ GUISetState(@SW_SHOW)
 
 _GUICtrlListView_InsertColumn($lvt_StepList, 0, "Control", 100)
 _GUICtrlListView_InsertColumn($lvt_StepList, 1, "Action Description", 250)
+
 
 
 

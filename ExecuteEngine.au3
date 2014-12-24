@@ -10,9 +10,6 @@ Chris Hong  Chrishong@outlook.com
 #include-once
 
 
-;Local $test = __UIGO_Find("Title:=UIA - OneNote")
-;Local $strInfo = _UIA_getAllPropertyValues($test)
-;ConsoleWrite($strInfo)
 
 
 ; Load all the function map relationship
@@ -21,11 +18,8 @@ Global $UIGO_ActionMap = Dict()
 $UIGO_ActionMap.add("DIRECTION", "__UIGO_KB_DIRECTION")
 $UIGO_ActionMap.add("MOVE", "__UIGO_Window_Action_Move")
 $UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
+$UIGO_ActionMap.add("LClick", "__Control_Common_Click")
 
-$UIGO_ActionMap.add("MOVE", "__UIGO_Window_Action_Move")
-$UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
-$UIGO_ActionMap.add("MOVE", "__UIGO_Window_Action_Move")
-$UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
 
 
 ;ShowActionMap()
@@ -59,6 +53,9 @@ Func __UIGO_Find($UIDescription)
 	EndIf
 
 EndFunc
+
+
+
 
 ;----------------------------------------------------------------------------
 ;		This is the Windows Action Functions
@@ -193,4 +190,93 @@ Func __UIGO_CLUTCH($strAction, ByRef $WINDOW, ByRef $Control, ByRef $Action, ByR
 	Else
 		MsgBox(1, "test", "Error action string")
 	EndIf
+EndFunc
+
+
+Func __Control_Common_Action($strAction)
+
+	Local $Control, $Action, $Params, $WINDOW
+	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params)
+	__UIGO_ENGINE($Action, $Control, $WINDOW, $Action, $Params)
+EndFunc
+
+
+Func __Control_Common_Click($WINDOW, $CONTROL, $Action, $Params)
+
+	If __Param_Parse($WINDOW,  $Params) Then
+
+		MsgBox(0, "", $WINDOW & @CRLF & $Params)
+		Local $oTarget = __Search_Object($WINDOW, $Params)
+
+		_UIA_action($oTarget, "click")
+	EndIf
+EndFunc
+
+Func __Param_Parse(ByRef $WINDOW, ByRef $Params)
+
+	Local $UIA_propertiesSupportedArray[] = ["name", "title", "automationid","classname", _
+											"class","iaccessiblevalue", "iaccessiblechildId", _
+											"controltype", "processid", "acceleratorkey", "isoffscreen"]
+
+	For $intCount = 0 To UBound($UIA_propertiesSupportedArray) - 1
+		If StringInStr($WINDOW, $UIA_propertiesSupportedArray[$intCount]) Then
+			For $intCount = 0 To UBound($UIA_propertiesSupportedArray) - 1
+				If StringInStr($Params, $UIA_propertiesSupportedArray[$intCount]) Then
+					$WINDOW = __Inspect2UIAString($WINDOW)
+					$Params = __Inspect2UIAString($Params)
+					Return 1
+				EndIf
+			Next
+		EndIf
+	Next
+
+	Return 0
+
+EndFunc
+
+Func __Inspect2UIAString($InspectString)
+
+	Return StringRegExpReplace($InspectString, '(\s)"(.+)"$','=$2')
+EndFunc
+
+
+Func __Search_Object($ObjRootDesc, $ObjDesc)
+
+	Local $oRootWindow = __UIGO_Find($ObjRootDesc)
+
+	If IsObj($oRootWindow) Then
+
+		Local $oTargetControl = __UIA_FindObj($oRootWindow, $ObjDesc)
+
+		If IsObj($oTargetControl) Then
+
+			Return $oTargetControl
+		Else
+			Return False
+		EndIf
+
+	EndIf
+
+
+EndFunc
+
+Func __UIA_FindObj($UIA_ROOT, $UIA_DESC, $TRY_TIME = 3, $WaitTime = 3000)
+
+
+	If $TRY_TIME  Then
+
+		$oControl = _UIA_getFirstObjectOfElement($UIA_ROOT, $UIA_DESC, $treescope_subtree)
+
+		If IsObj($oControl) Then
+
+			Return $oControl
+		Else
+			Sleep($WaitTime)
+			$TRY_TIME = $TRY_TIME - 1
+			__UIA_FindObj($UIA_ROOT, $UIA_DESC, $TRY_TIME, $WaitTime)
+		EndIf
+	Else
+		Return False
+	EndIf
+
 EndFunc

@@ -150,3 +150,34 @@ Data (D:)|Window|Activite|
 D:\Git\UIGO\git\UIGO\ActionGenerator.au3 - SciTE|Window|Activite|
 D:\Git\UIGO\git\UIGO\ActionGenerator.au3 - SciTE|Window|Move|100,100
 D:\Git\UIGO\git\UIGO\ActionGenerator.au3 - SciTE|Mouse|Move|100,100
+UIGO|Window|Activite|
+UIGO|Window|Activite|
+UIGO|Window|Activite|
+UIGO|Window|Move|10,10
+UIGO|Window|Activite|
+UIGO|Window|Move|100,100
+|Window|Activite|
+AutomationId:	"TitleBar"|Window|Activite|Name:	"Search Box"
+AutomationId:	"TitleBar"|Window|Activite|Name:	"Search Box"
+AutomationId:	"TitleBar"|Window|Activite|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|Activite|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+TEST|Window|Activite|TQE
+TEST|Window|LCLICK|TQE
+UIGO|Window|Activite|
+AutomationId:	"TitleBar"|Window|Activite|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+ewqr|Window|LCLICK|rqwer
+FDAS|Window|LClick|FSAF
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+Name:	"Help"|Window|LCLICK|ClassName:	"Edit"
+Name:	"Help"|Window|LCLICK|ClassName:	"Edit"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
+Name:	"UI Description Generator"|Window|LCLICK|AutomationId:	"12"
