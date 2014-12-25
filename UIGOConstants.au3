@@ -8,19 +8,17 @@ Chris Hong  Chrishong@outlook.com
 #ce ----------------------------------------------------------------------------
 
 Enum $Window, $Button, $Edit, $Checkbox, $Radio, $Listbox, $ComboBox, $KB, $Mouse
-Enum $Activite, $Check, $Select, $GetText, $Move, $RClick, $LClick, $DIRECTION
+Enum $Activite, $Check, $Select, $GetText, $Move, $RClick, $LClick, $DIRECTION, $SetText
 
 Global  $UIGO_Support_Control_Types = ""
 Global  $UIGO_Control_Support_Actions = ""
 
 Global $UIGO_CONTROL_TYPES[9]
-Global $UIGO_CONTROL_ACTIONS[8]
+Global $UIGO_CONTROL_ACTIONS[9]
 
 Global Const $UIGO_Control_Default_Type = "Window"
 Global Const $UIGO_Control_Default_Action = "Activite"
 Global Const $UIGO_PARAM_SPERATOR = ","
-
-
 
 
 $UIGO_CONTROL_TYPES[$Window] = "Window"
@@ -37,14 +35,11 @@ $UIGO_CONTROL_ACTIONS[$Activite] = "Activite"
 $UIGO_CONTROL_ACTIONS[$Check] = "Check"
 $UIGO_CONTROL_ACTIONS[$Select] = "Select"
 $UIGO_CONTROL_ACTIONS[$GetText] = "GetText"
+$UIGO_CONTROL_ACTIONS[$SetText] = "SetText"
 $UIGO_CONTROL_ACTIONS[$Move] = "Move"
 $UIGO_CONTROL_ACTIONS[$RClick] = "RClick"
 $UIGO_CONTROL_ACTIONS[$LClick] = "LCLICK"
 $UIGO_CONTROL_ACTIONS[$DIRECTION] = "DIRECTION"
-
-
-
-
 
 
 

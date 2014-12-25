@@ -9,9 +9,6 @@ Chris Hong  Chrishong@outlook.com
 #include "UIAWrappers.au3"
 #include-once
 
-
-
-
 ; Load all the function map relationship
 Global $UIGO_ActionMap = Dict()
 
@@ -19,11 +16,9 @@ $UIGO_ActionMap.add("DIRECTION", "__UIGO_KB_DIRECTION")
 $UIGO_ActionMap.add("MOVE", "__UIGO_Window_Action_Move")
 $UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
 $UIGO_ActionMap.add("LClick", "__Control_Common_Click")
-
-
+$UIGO_ActionMap.add("SetText", "__Control_Common_SetText")
 
 ;ShowActionMap()
-
 Func ShowActionMap()
 
 	Local $aryDict[2][2]
@@ -33,7 +28,6 @@ Func ShowActionMap()
 	ReDim $aryDict[$intCount][2]
 
 	For $intItem = 0 To $intCount - 1
-
 		$aryDict[$intItem][0] = $Keys[$intItem]
 		$aryDict[$intItem][1] =$UIGO_ActionMap.item($Keys[$intItem])
 	Next
@@ -53,8 +47,6 @@ Func __UIGO_Find($UIDescription)
 	EndIf
 
 EndFunc
-
-
 
 
 ;----------------------------------------------------------------------------
@@ -183,8 +175,8 @@ Func __UIGO_CLUTCH($strAction, ByRef $WINDOW, ByRef $Control, ByRef $Action, ByR
 	Local $aryAction = StringSplit($strAction, "|")
 
 	If IsArray($aryAction) Then
-		$Control = $aryAction[1]
-		$WINDOW = $aryAction[2]
+		$WINDOW = $aryAction[1]
+		$Control = $aryAction[2]
 		$Action = $aryAction[3]
 		$Params = $aryAction[4]
 	Else
@@ -197,7 +189,7 @@ Func __Control_Common_Action($strAction)
 
 	Local $Control, $Action, $Params, $WINDOW
 	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params)
-	__UIGO_ENGINE($Action, $Control, $WINDOW, $Action, $Params)
+	__UIGO_ENGINE($Action, $WINDOW, $Control, $Action, $Params)
 EndFunc
 
 
@@ -205,12 +197,24 @@ Func __Control_Common_Click($WINDOW, $CONTROL, $Action, $Params)
 
 	If __Param_Parse($WINDOW,  $Params) Then
 
-		MsgBox(0, "", $WINDOW & @CRLF & $Params)
 		Local $oTarget = __Search_Object($WINDOW, $Params)
 
 		_UIA_action($oTarget, "click")
 	EndIf
 EndFunc
+
+
+Func __Control_Common_SetText($WINDOW, $CONTROL, $Action, $Params)
+
+	If __Param_Parse($WINDOW,  $Params) Then
+
+		Local $oTarget = __Search_Object($WINDOW, $Params)
+
+		_UIA_action($oTarget, "setvalue", $Params)
+	EndIf
+EndFunc
+
+
 
 Func __Param_Parse(ByRef $WINDOW, ByRef $Params)
 

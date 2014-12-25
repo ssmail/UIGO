@@ -181,3 +181,13 @@ AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
 AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
 AutomationId:	"TitleBar"|Window|LCLICK|AutomationId:	"SearchEditBox"
 Name:	"UI Description Generator"|Window|LCLICK|AutomationId:	"12"
+Name:	"UIGO/ExecuteEngine.au3 at master ¡¤ ssmail/UIGO - Google Chrome"|Window|LCLICK|Name:	"New Tab"
+Name:	"UI Description Generator"|Window|SetText|AutomationId:	"1001"
+Name:	"UI Description Generator"|AutomationId:=1001|SetText|AutomationId:	"1001"
+ClassName:	"AutoIt v3 GUI"|Window|SetText|AutomationId:	"12"
+ClassName:	"AutoIt v3 GUI"|Window|SetText|AutomationId:=12
+AAA|Window|Activite|BBB
+Name:	"UI Description Generator"|Window|SetText|AutomationId:	"12"
+Name:	"UI Description Generator"|Window|SetText|AutomationId:=12
+Name:	"UI Description Generator"|Window|SetText|AutomationId:=12
+Name:	"UI Description Generator"|Window|SetText|AutomationId:=3
