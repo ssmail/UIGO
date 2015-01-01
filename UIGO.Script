@@ -191,3 +191,6 @@ Name:	"UI Description Generator"|Window|SetText|AutomationId:	"12"
 Name:	"UI Description Generator"|Window|SetText|AutomationId:=12
 Name:	"UI Description Generator"|Window|SetText|AutomationId:=12
 Name:	"UI Description Generator"|Window|SetText|AutomationId:=3
+Name:	"Downloads"|Window|SetText|AutomationId:	"1001"
+Name:	"Downloads"|Window|SetText|AutomationId:	"1001"
+Name:	"Downloads"|Window|LCLICK|AutomationId:	"1001"

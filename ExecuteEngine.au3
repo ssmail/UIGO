@@ -15,38 +15,14 @@ Global $UIGO_ActionMap = Dict()
 $UIGO_ActionMap.add("DIRECTION", "__UIGO_KB_DIRECTION")
 $UIGO_ActionMap.add("MOVE", "__UIGO_Window_Action_Move")
 $UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
-$UIGO_ActionMap.add("LClick", "__Control_Common_Click")
+$UIGO_ActionMap.add("LClick", "__Control_Common_LClick")
 $UIGO_ActionMap.add("SetText", "__Control_Common_SetText")
+$UIGO_ActionMap.add("RClick", "__Control_Common_RClick")
+
+$UIGO_ActionMap.add("LDoubleClick", "__Control_Common_LDoubleClick")
+
 
 ;ShowActionMap()
-Func ShowActionMap()
-
-	Local $aryDict[2][2]
-	Local $Keys = $UIGO_ActionMap.keys()
-	Local $items = $UIGO_ActionMap.items()
-	Local $intCount = $UIGO_ActionMap.count()
-	ReDim $aryDict[$intCount][2]
-
-	For $intItem = 0 To $intCount - 1
-		$aryDict[$intItem][0] = $Keys[$intItem]
-		$aryDict[$intItem][1] =$UIGO_ActionMap.item($Keys[$intItem])
-	Next
-
-	_ArrayDisplay($aryDict)
-EndFunc
-
-Func __UIGO_Find($UIDescription)
-
-	Local $oElement = _UIA_getFirstObjectOfElement($UIA_oDesktop, $UIDescription, $treescope_children)
-
-	If IsObj($oElement) Then
-		Return $oElement
-	Else
-		MsgBox(0, "", "Object not found", 1)
-		Return 0
-	EndIf
-
-EndFunc
 
 
 ;----------------------------------------------------------------------------
@@ -71,8 +47,10 @@ EndFunc
 Func __UIGO_Window_Action_Activite($WINDOW, $CONTROL, $ACTION, $strParam)
 	WinActivate($WINDOW)
 EndFunc
+Func __UIGO_Window_Action_Activite_Update($WINDOW, $CONTROL, $ACTION, $strParam)
+	WinActivate($WINDOW)
 
-
+EndFunc
 
 ;----------------------------------------------------------------------------
 ;		This is the Mouse Action function
@@ -125,7 +103,6 @@ Func __UIGO_KB_Action($strAction)
 	__UIGO_ENGINE($Action, "", "", "", $Params)
 EndFunc
 
-
 Func __UIGO_KB_DIRECTION($strAction)
 	Switch $strAction
 		Case "UP"
@@ -143,6 +120,99 @@ Func __UIGO_KB_DIRECTION($strAction)
 EndFunc
 
 
+
+
+
+
+;----------------------------------------------------------------------------
+; 		This is the Common functions
+;		Click, SetText
+;		SelectItems
+;
+
+Func __Control_Common_Action($strAction)
+
+	Local $Control, $Action, $Params, $WINDOW
+	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params)
+	__UIGO_ENGINE($Action, $WINDOW, $Control, $Action, $Params)
+EndFunc
+
+Func __Control_Common_LClick($WINDOW, $CONTROL, $Action, $Params)
+
+	If __Param_Parse($WINDOW,  $Params) Then
+
+		Local $oTarget = __Search_Object($WINDOW, $Params)
+
+		_UIA_action($oTarget, "click")
+	EndIf
+EndFunc
+
+Func __Control_Common_RClick($WINDOW, $CONTROL, $Action, $Params)
+
+	If __Param_Parse($WINDOW,  $Params) Then
+
+		Local $oTarget = __Search_Object($WINDOW, $Params)
+
+		_UIA_action($oTarget, "rightclick")
+	EndIf
+EndFunc
+
+Func __Control_Common_SetText($WINDOW, $CONTROL, $Action, $Params)
+
+	If __Param_Parse($WINDOW,  $Params) Then
+
+		Local $oTarget = __Search_Object($WINDOW, $Params)
+
+		_UIA_action($oTarget, "setvalue", $Params)
+	EndIf
+EndFunc
+
+Func __Control_Common_LDoubleClick($WINDOW, $CONTROL, $Action, $Params)
+	If __Param_Parse($WINDOW,  $Params) Then
+
+		Local $oTarget = __Search_Object($WINDOW, $Params)
+
+		_UIA_action($oTarget, "leftdoubleclick")
+	EndIf
+EndFunc
+
+
+
+
+;----------------------------------------------------------------------------
+; 		This is the Core function
+;
+;
+
+Func  ShowActionMap()
+
+	Local $aryDict[2][2]
+	Local $Keys = $UIGO_ActionMap.keys()
+	Local $items = $UIGO_ActionMap.items()
+	Local $intCount = $UIGO_ActionMap.count()
+	ReDim $aryDict[$intCount][2]
+
+	For $intItem = 0 To $intCount - 1
+		$aryDict[$intItem][0] = $Keys[$intItem]
+		$aryDict[$intItem][1] =$UIGO_ActionMap.item($Keys[$intItem])
+	Next
+
+	_ArrayDisplay($aryDict)
+EndFunc
+
+Func __UIGO_Find($UIDescription)
+
+	Local $oElement = _UIA_getFirstObjectOfElement($UIA_oDesktop, $UIDescription, $treescope_children)
+
+	If IsObj($oElement) Then
+		Return $oElement
+	Else
+		MsgBox(0, "", "Object not found", 1)
+		Return 0
+	EndIf
+
+EndFunc
+
 Func __UIGO_ENGINE($ACTION_NAME, $WINDOW = "", $CONTROL = "", $ACTION = "", $PARAMS = "")
 
 	; Map the action string to Real Execute Function
@@ -154,21 +224,6 @@ Func __UIGO_ENGINE($ACTION_NAME, $WINDOW = "", $CONTROL = "", $ACTION = "", $PAR
 		MsgBox(0, "", "unknown action map")
 	EndIf
 EndFunc
-
-
-
-Func Dict()
-	$obj_Map = ObjCreate('Scripting.Dictionary')
-	$obj_Map.CompareMode = 1
-
-	If IsObj($obj_Map) Then
-		Return $obj_Map
-	Else
-		MsgBox(0, "", "Create Ojbect failed")
-		Exit
-	EndIf
-EndFunc
-
 
 Func __UIGO_CLUTCH($strAction, ByRef $WINDOW, ByRef $Control, ByRef $Action, ByRef $Params)
 
@@ -183,38 +238,6 @@ Func __UIGO_CLUTCH($strAction, ByRef $WINDOW, ByRef $Control, ByRef $Action, ByR
 		MsgBox(1, "test", "Error action string")
 	EndIf
 EndFunc
-
-
-Func __Control_Common_Action($strAction)
-
-	Local $Control, $Action, $Params, $WINDOW
-	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params)
-	__UIGO_ENGINE($Action, $WINDOW, $Control, $Action, $Params)
-EndFunc
-
-
-Func __Control_Common_Click($WINDOW, $CONTROL, $Action, $Params)
-
-	If __Param_Parse($WINDOW,  $Params) Then
-
-		Local $oTarget = __Search_Object($WINDOW, $Params)
-
-		_UIA_action($oTarget, "click")
-	EndIf
-EndFunc
-
-
-Func __Control_Common_SetText($WINDOW, $CONTROL, $Action, $Params)
-
-	If __Param_Parse($WINDOW,  $Params) Then
-
-		Local $oTarget = __Search_Object($WINDOW, $Params)
-
-		_UIA_action($oTarget, "setvalue", $Params)
-	EndIf
-EndFunc
-
-
 
 Func __Param_Parse(ByRef $WINDOW, ByRef $Params)
 
@@ -243,6 +266,17 @@ Func __Inspect2UIAString($InspectString)
 	Return StringRegExpReplace($InspectString, '(\s)"(.+)"$','=$2')
 EndFunc
 
+Func Dict()
+	$obj_Map = ObjCreate('Scripting.Dictionary')
+	$obj_Map.CompareMode = 1
+
+	If IsObj($obj_Map) Then
+		Return $obj_Map
+	Else
+		MsgBox(0, "", "Create Ojbect failed")
+		Exit
+	EndIf
+EndFunc
 
 Func __Search_Object($ObjRootDesc, $ObjDesc)
 
