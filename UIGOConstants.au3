@@ -20,7 +20,6 @@ Global Const $UIGO_Control_Default_Type = "Window"
 Global Const $UIGO_Control_Default_Action = "Activite"
 Global Const $UIGO_PARAM_SPERATOR = ","
 
-
 $UIGO_CONTROL_TYPES[$Window] = "Window"
 $UIGO_CONTROL_TYPES[$Button] = "Button"
 $UIGO_CONTROL_TYPES[$Edit] = "Edit"
@@ -41,6 +40,10 @@ $UIGO_CONTROL_ACTIONS[$RClick] = "RClick"
 $UIGO_CONTROL_ACTIONS[$LClick] = "LCLICK"
 $UIGO_CONTROL_ACTIONS[$DIRECTION] = "DIRECTION"
 
+
+
+Global  $FP_UIGO_DESC = @ScriptDir & "\UIGO.Script"
+Global 	$EXECUTION_BREAK = 1000 * 2
 
 
 Func __UIGO_Initialization()

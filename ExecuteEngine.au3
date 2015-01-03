@@ -28,12 +28,12 @@ $UIGO_ActionMap.add("LDoubleClick", "__Control_Common_LDoubleClick")
 ;----------------------------------------------------------------------------
 ;		This is the Windows Action Functions
 Func __UIGO_Window_Action($strAction)
-	Local $Control, $Action, $Params, $WINDOW
-	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params)
+	Local $Control, $Action, $Params, $WINDOW, $Params2
+	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params, $Params2)
 	__UIGO_ENGINE($Action, $Control, "", "", $Params)
 EndFunc
 
-Func __UIGO_Window_Action_Move($WINDOW, $CONTROL, $ACTION, $strParam)
+Func __UIGO_Window_Action_Move($WINDOW, $CONTROL, $ACTION, $strParam, $Params2)
 	Local $aryPos = StringSplit($strParam, $UIGO_PARAM_SPERATOR)
 	If IsArray($aryPos) Then
 		WinActivate($WINDOW)
@@ -44,11 +44,25 @@ Func __UIGO_Window_Action_Move($WINDOW, $CONTROL, $ACTION, $strParam)
 	EndIf
 EndFunc
 
-Func __UIGO_Window_Action_Activite($WINDOW, $CONTROL, $ACTION, $strParam)
-	WinActivate($WINDOW)
+Func __UIGO_Window_Action_Activite($WINDOW, $CONTROL, $ACTION, $strParam, $Params2)
+
+	If StringInStr($WINDOW, ":=") Then
+		Local $objWindow = __UIGO_Find($WINDOW)
+		If IsObj($objWindow) Then
+			_UIA_action($objWindow, "activate")
+		Else
+			__Err(1, "", "window not found")
+		EndIf
+	Else
+		WinActivate($WINDOW)
+	EndIf
+
 EndFunc
+
+
 Func __UIGO_Window_Action_Activite_Update($WINDOW, $CONTROL, $ACTION, $strParam)
-	WinActivate($WINDOW)
+
+	;_UIA_action($O, "activate")
 
 EndFunc
 
@@ -56,12 +70,12 @@ EndFunc
 ;		This is the Mouse Action function
 ;
 Func __UIGO_Mouse_Action($strAction)
-	Local $Control, $Action, $Params, $WINDOW
-	__UIGO_CLUTCH($strAction,$WINDOW,  $Control, $Action, $Params)
+	Local $Control, $Action, $Params, $WINDOW, $Params2
+	__UIGO_CLUTCH($strAction,$WINDOW,  $Control, $Action, $Params, $Params2)
 	__UIGO_ENGINE($Action, $Control, "", "", $Params)
 EndFunc
 
-Func __UIGO_Mouse_Click($WINDOW, $CONTROL, $ACTION, $strParam)
+Func __UIGO_Mouse_Click($WINDOW, $CONTROL, $ACTION, $strParam, $Params2)
 
 	Local $aryPos = StringSplit($strParam, $UIGO_PARAM_SPERATOR)
 	If IsArray($aryPos) Then
@@ -71,7 +85,7 @@ Func __UIGO_Mouse_Click($WINDOW, $CONTROL, $ACTION, $strParam)
 	EndIf
 EndFunc
 
-Func __UIGO_Mouse_Move($WINDOW, $CONTROL, $ACTION, $strParam)
+Func __UIGO_Mouse_Move($WINDOW, $CONTROL, $ACTION, $strParam, $Params2)
 
 	Local $aryPos = StringSplit($strParam, $UIGO_PARAM_SPERATOR)
 
@@ -82,7 +96,7 @@ Func __UIGO_Mouse_Move($WINDOW, $CONTROL, $ACTION, $strParam)
 	EndIf
 EndFunc
 
-Func __UIGO_MouseRightClick($WINDOW, $CONTROL, $ACTION, $strParam)
+Func __UIGO_MouseRightClick($WINDOW, $CONTROL, $ACTION, $strParam, $Params2)
 
 	Local $aryPos = StringSplit($strParam, $UIGO_PARAM_SPERATOR)
 	If IsArray($aryPos) Then
@@ -98,9 +112,9 @@ EndFunc
 ;
 
 Func __UIGO_KB_Action($strAction)
-	Local $Control, $Action, $Params,$WINDOW
-	__UIGO_CLUTCH($strAction,$WINDOW,  $Control, $Action, $Params)
-	__UIGO_ENGINE($Action, "", "", "", $Params)
+	Local $Control, $Action, $Params,$WINDOW, $Params2
+	__UIGO_CLUTCH($strAction,$WINDOW,  $Control, $Action, $Params, $Params2)
+	__UIGO_ENGINE($Action, "", "", "", $Params, $Params2)
 EndFunc
 
 Func __UIGO_KB_DIRECTION($strAction)
@@ -132,12 +146,13 @@ EndFunc
 
 Func __Control_Common_Action($strAction)
 
-	Local $Control, $Action, $Params, $WINDOW
-	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params)
-	__UIGO_ENGINE($Action, $WINDOW, $Control, $Action, $Params)
+	Local $Control, $Action, $Params, $WINDOW, $Params2
+
+	__UIGO_CLUTCH($strAction, $WINDOW, $Control, $Action, $Params, $Params2)
+	__UIGO_ENGINE($Action, $WINDOW, $Control, $Action, $Params, $Params2)
 EndFunc
 
-Func __Control_Common_LClick($WINDOW, $CONTROL, $Action, $Params)
+Func __Control_Common_LClick($WINDOW, $CONTROL, $Action, $Params, $Params2)
 
 	If __Param_Parse($WINDOW,  $Params) Then
 
@@ -147,7 +162,7 @@ Func __Control_Common_LClick($WINDOW, $CONTROL, $Action, $Params)
 	EndIf
 EndFunc
 
-Func __Control_Common_RClick($WINDOW, $CONTROL, $Action, $Params)
+Func __Control_Common_RClick($WINDOW, $CONTROL, $Action, $Params, $Params2)
 
 	If __Param_Parse($WINDOW,  $Params) Then
 
@@ -157,17 +172,17 @@ Func __Control_Common_RClick($WINDOW, $CONTROL, $Action, $Params)
 	EndIf
 EndFunc
 
-Func __Control_Common_SetText($WINDOW, $CONTROL, $Action, $Params)
+Func __Control_Common_SetText($WINDOW, $CONTROL, $Action, $Params, $Params2)
 
 	If __Param_Parse($WINDOW,  $Params) Then
 
 		Local $oTarget = __Search_Object($WINDOW, $Params)
 
-		_UIA_action($oTarget, "setvalue", $Params)
+		_UIA_action($oTarget, "setvalue", $Params2)
 	EndIf
 EndFunc
 
-Func __Control_Common_LDoubleClick($WINDOW, $CONTROL, $Action, $Params)
+Func __Control_Common_LDoubleClick($WINDOW, $CONTROL, $Action, $Params, $Params2)
 	If __Param_Parse($WINDOW,  $Params) Then
 
 		Local $oTarget = __Search_Object($WINDOW, $Params)
@@ -213,19 +228,19 @@ Func __UIGO_Find($UIDescription)
 
 EndFunc
 
-Func __UIGO_ENGINE($ACTION_NAME, $WINDOW = "", $CONTROL = "", $ACTION = "", $PARAMS = "")
+Func __UIGO_ENGINE($ACTION_NAME, $WINDOW = "", $CONTROL = "", $ACTION = "", $PARAMS = "", $PARAMS2 = "")
 
 	; Map the action string to Real Execute Function
 	$strFuncName = $UIGO_ActionMap.item($ACTION_NAME)
 
 	If $strFuncName Then
-		Call($strFuncName, $WINDOW, $CONTROL, $ACTION, $PARAMS)
+		Call($strFuncName, $WINDOW, $CONTROL, $ACTION, $PARAMS, $PARAMS2)
 	Else
 		MsgBox(0, "", "unknown action map")
 	EndIf
 EndFunc
 
-Func __UIGO_CLUTCH($strAction, ByRef $WINDOW, ByRef $Control, ByRef $Action, ByRef $Params)
+Func __UIGO_CLUTCH($strAction, ByRef $WINDOW, ByRef $Control, ByRef $Action, ByRef $Params, ByRef $Params2)
 
 	Local $aryAction = StringSplit($strAction, "|")
 
@@ -234,6 +249,7 @@ Func __UIGO_CLUTCH($strAction, ByRef $WINDOW, ByRef $Control, ByRef $Action, ByR
 		$Control = $aryAction[2]
 		$Action = $aryAction[3]
 		$Params = $aryAction[4]
+		$Params2 = $aryAction[5]
 	Else
 		MsgBox(1, "test", "Error action string")
 	EndIf

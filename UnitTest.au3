@@ -1,7 +1,14 @@
 #include "UIAWrappers.au3"
 
 
-__Search_Object("Name:=UIGO", "AutomationId:=SearchEditBox")
+;Local $O = __UIGO_Find("Name:=UIGO")
+
+;_UIA_action($O, "activate")
+
+Func __Inspect2UIAString($InspectString)
+
+	Return StringRegExpReplace($InspectString, '(\s)"(.+)"$','=$2')
+EndFunc
 
 Func __UIGO_Find($UIDescription)
 

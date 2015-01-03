@@ -41,7 +41,11 @@ GUICtrlSetData(-1, $UIGO_Control_Support_Actions)
 
 $btn_Insert = GUICtrlCreateButton("Insert Step", 488, 230, 75, 25)
 $lbl_Param = GUICtrlCreateLabel("Parameters", 56, 200, 66, 19)
-$ipt_Params = GUICtrlCreateInput("", 56, 230, 300, 23)
+$ipt_Params = GUICtrlCreateInput("", 56, 230, 200, 23)
+
+$lbl_Param2 = GUICtrlCreateLabel("Parameters2", 290, 200, 70, 19)
+$ipt_Params2 = GUICtrlCreateInput("", 290, 230, 100, 23)
+
 
 $lvt_StepList = GUICtrlCreateListView("", 624, 32, 337, 441)
 
@@ -78,6 +82,15 @@ Func __InsertStep()
 	Local $strControlAction = GUICtrlRead($Cmbx_ControlAction)
 	Local $strParameters = GUICtrlRead($ipt_Params)
 	Local $strWorkWindow = GUICtrlRead($ipt_WorkWindow)
+	Local $strParameters2 = GUICtrlRead($ipt_Params2)
+
+
+	If Not $strWorkWindow Then $strWorkWindow = "NULL"
+	If Not $strControlType Then $strControlType = "NULL"
+	If Not $strControlAction Then $strControlAction = "NULL"
+	If Not $strParameters Then $strParameters = "NULL"
+	If Not $strParameters2 Then $strParameters2 = "NULL"
+
 
 	$intListViewIndex = _GUICtrlListView_GetItemCount($lvt_StepList)
 
@@ -85,7 +98,7 @@ Func __InsertStep()
 	_GUICtrlListView_AddSubItem($lvt_StepList, $intListViewIndex, $strControlAction  & _
 									" " & $strControlType & " " & $strParameters , 1, 1)
 
-	_UIGO_Add_Step($strWorkWindow, $strControlType, $strControlAction, $strParameters)
+	_UIGO_Add_Step($strWorkWindow, $strControlType, $strControlAction, $strParameters, $strParameters2)
 EndFunc
 
 
@@ -94,6 +107,7 @@ Func __GetParams()
 	Local $strControlType = GUICtrlRead($Cmbx_ControlType)
 	Local $strControlAction = GUICtrlRead($Cmbx_ControlAction)
 	Local $strParameters = GUICtrlRead($ipt_Params)
+	Local $strParameters2 = GUICtrlRead($ipt_Params2)
 	Local $strWindowName = GUICtrlRead($ipt_WorkWindow)
 
 EndFunc
