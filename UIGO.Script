@@ -1,3 +1,4 @@
-UIGO|Window|Activite|AutomationId:	"SearchEditBox"|TEST
-UIGO|Window|Activite|NULL|NULL
-Name:	"UIGO"|Window|SetText|AutomationId:	"SearchEditBox"|inc.au3
+NULL|Mouse|Move|100,100|NULLName:	"PuTTY Configuration"|Window|Activite|NULL|NULL
+Name:	"PuTTY Configuration"|Edit|SetText|AutomationId:	"1044"|10.100.15.99
+Name:	"PuTTY Configuration"|Button|LCLICK|AutomationId:	"1048"|NULL
+Name:	"PuTTY Configuration"|Edit|SetText|AutomationId:	"1055"|UIGO Test

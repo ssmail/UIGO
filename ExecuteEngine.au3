@@ -18,7 +18,6 @@ $UIGO_ActionMap.add("Activite", "__UIGO_Window_Action_Activite")
 $UIGO_ActionMap.add("LClick", "__Control_Common_LClick")
 $UIGO_ActionMap.add("SetText", "__Control_Common_SetText")
 $UIGO_ActionMap.add("RClick", "__Control_Common_RClick")
-
 $UIGO_ActionMap.add("LDoubleClick", "__Control_Common_LDoubleClick")
 
 
@@ -231,6 +230,8 @@ EndFunc
 Func __UIGO_ENGINE($ACTION_NAME, $WINDOW = "", $CONTROL = "", $ACTION = "", $PARAMS = "", $PARAMS2 = "")
 
 	; Map the action string to Real Execute Function
+	$ACTION_NAME = $ACTION
+
 	$strFuncName = $UIGO_ActionMap.item($ACTION_NAME)
 
 	If $strFuncName Then
